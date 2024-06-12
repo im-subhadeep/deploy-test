@@ -5,7 +5,8 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = 'qwertyuiopasdfghjklzxcvbnbnm';
+
+//const JWT_SECRET = 'qwertyuiopasdfghjklzxcvbnbnm';
 
 const generateAppointmentNumber = () => {
   return Math.floor(100000 + Math.random() * 900000).toString(); // Generates a 6-digit number
@@ -59,7 +60,7 @@ router.post('/createuser', [
         id: user.id
       }
     };
-    const authToken = jwt.sign(data, JWT_SECRET);
+    const authToken = jwt.sign(data, process.env.JWT_SECRET);
 
     res.json({ success: true, authToken: authToken });
   } catch (error) {
@@ -97,7 +98,7 @@ router.post('/loginuser', [
         id: userData.id
       }
     };
-    const authToken = jwt.sign(data, JWT_SECRET);
+    const authToken = jwt.sign(data, process.env.JWT_SECRET);
 
     return res.json({ success: true, authToken });
 
@@ -137,7 +138,7 @@ router.post('/logindoctor', [
         id: doctorData._id
       }
     };
-    const authToken = jwt.sign(data, JWT_SECRET);
+    const authToken = jwt.sign(data, process.env.JWT_SECRET);
 
     return res.json({ success: true, authToken });
 
